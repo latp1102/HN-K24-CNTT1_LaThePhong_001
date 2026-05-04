@@ -9,7 +9,7 @@
 <div>
     <h1 th:text="${artwork.id != null ? 'Cập nhật tác phẩm' : 'Thêm tác phẩm mới'}">Form tác phẩm</h1>
     <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
-    <form th:action="@{/artworks/add}" th:object="${artwork}" method="post">
+    <form th:action="${artwork.id != null ? '/artworks/edit/' + artwork.id : '/artworks/add'}" th:object="${artwork}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}" th:if="${artwork.id != null}">
         <div>
             <label>Name</label>

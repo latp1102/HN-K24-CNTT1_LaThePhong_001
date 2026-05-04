@@ -79,7 +79,7 @@ public class ArtworkController {
             model.addAttribute("categories", categoryRepository.findAll());
             return "artwork-form";
         }).orElseGet(() -> {
-            redirectAttributes.addFlashAttribute("errorMessage", "Artwork not found");
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy tác phẩm");
             return "redirect:/artworks";
         });
     }
