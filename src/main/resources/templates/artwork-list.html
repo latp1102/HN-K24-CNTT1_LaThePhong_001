@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+<div>
+    <div>
+        <a href="/artworks/add">Thêm</a>
+    </div>
+    <div th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>CoverImage</th>
+            <th>Name</th>
+            <th>Artist</th>
+            <th>Price</th>
+            <th>Release Date</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="artwork : ${artworkPage.content}">
+            <td th:text="${artwork.id}"></td>
+            <td>
+                <img th:if="${artwork.coverImage}" th:src="@{'/uploads/' + ${artwork.coverImage}}" alt="">
+                <div th:unless="${artwork.coverImage}">
+                    Không có ảnh
+                </div>
+            </td>
+            <td th:text="${artwork.title}"></td>
+            <td th:text="${artwork.artist}"></td>
+            <td th:text="${#numbers.formatDecimal(artwork.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+            <td th:text="${#temporals.format(artwork.releaseDate, 'dd-MM-yyyy')}"></td>
+            <td th:text="${artwork.category != null ? artwork.category.name : 'N/A'}"></td>
+            <td th:text="${artwork.status ? 'Hiển thị' : 'Ẩn'}"></td>
+            <td>
+                <a th:href="@{/artworks/{id}/edit(id=${artwork.id})}">Sửa</a>
+                <a th:href="@{/artworks/{id}/delete(id=${artwork.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa tác phẩm này')">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${totalPages > 1}">
+        <a th:if="${currentPage > 0}" 
+           th:href="@{/artworks(page=${currentPage - 1})}" 
+           class="btn">
+            Trang trước
+        </a>
+        <span th:unless="${currentPage > 0}" class="btn">
+            Trang trước
+        </span>
+        <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:href="@{/artworks(page=${i})}" 
+               th:class="${i == currentPage ? 'active' : ''}"
+               th:text="${i + 1}"></a>
+        </span>
+        <a th:if="${currentPage < totalPages - 1}" 
+           th:href="@{/artworks(page=${currentPage + 1})}" 
+           class="btn">
+            Trang sau
+        </a>
+        <span th:unless="${currentPage < totalPages - 1}">
+            Trang sau
+        </span>
+    </div>
+    <div>
+        Hiển thị <span th:text="${artworkPage.numberOfElements}"></span> / <span th:text="${totalItems}"></span> tác phẩm
+    </div>
+</div>
+</body>
+</html>

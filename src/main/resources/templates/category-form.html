@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+<div>
+    <h1 th:text="${category.id != null ? 'Cập nhật danh mục' : 'Thêm danh mục mới'}">Form danh mục</h1>
+    <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
+    <form th:action="@{/categories/add}" th:object="${category}" method="post">
+        <input type="hidden" th:field="*{id}" th:if="${category.id != null}">
+        <div class="form-group">
+            <label>Tên danh mục:</label>
+            <input type="text" id="name" th:field="*{name}">
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div>
+            <label>Mô tả:</label>
+            <textarea id="description" th:field="*{description}"></textarea>
+            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        </div>
+        <div>
+            <button type="submit">
+                <span th:text="${category.id != null ? 'Cập nhật' : 'Thêm mới'}">Lưu</span>
+            </button>
+            <a href="/categories">Hủy</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

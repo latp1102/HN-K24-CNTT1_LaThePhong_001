@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+<div>
+    <h1 th:text="${artwork.id != null ? 'Cập nhật tác phẩm' : 'Thêm tác phẩm mới'}">Form tác phẩm</h1>
+    <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
+    <form th:action="@{/artworks/add}" th:object="${artwork}" method="post">
+        <input type="hidden" th:field="*{id}" th:if="${artwork.id != null}">
+        <div>
+            <label>Name</label>
+            <input type="text" id="title" th:field="*{title}">
+            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+        <div>
+            <label>Artist</label>
+            <input type="text" id="artist" th:field="*{artist}">
+            <div th:if="${#fields.hasErrors('artist')}" th:errors="*{artist}"></div>
+        </div>
+        <div>
+            <label>Price</label>
+            <input type="number" id="price" th:field="*{price}">
+            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" ></div>
+        </div>
+        <div>
+            <label>Release Date</label>
+            <input type="date" id="releaseDate" th:field="*{releaseDate}">
+            <div th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}"></div>
+        </div>
+        <div>
+            <label>Category</label>
+            <select id="category" th:field="*{category}">
+                <option value="">Category</option>
+                <option th:each="category : ${categories}" 
+                        th:value="${category.id}" 
+                        th:text="${category.name}"
+                        th:selected="${artwork.category != null and artwork.category.id == category.id}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+        </div>
+        <div>
+            <label>Hình ảnh:</label>
+            <input type="file" id="file" name="file" accept="image/*">
+            <div th:if="${artwork.coverImage}">
+                <p>Hình ảnh hiện tại:</p>
+                <img th:src="@{'/uploads/' + ${artwork.coverImage}}" alt="">
+            </div>
+        </div>
+        <div>
+            <div>
+                <input type="checkbox" id="status" th:field="*{status}">
+                <label>Hiển thị</label>
+            </div>
+        </div>
+        <div>
+            <button type="submit">
+                <span th:text="${artwork.id != null ? 'Cập nhật' : 'Thêm mới'}">Lưu</span>
+            </button>
+            <a href="/artworks">Hủy</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

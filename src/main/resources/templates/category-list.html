@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+<div>
+    <div>
+        <a href="/categories/add">Thêm danh mục</a>
+    </div>
+    <div th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên danh mục</th>
+            <th>Mô tả</th>
+            <th>Số tác phẩm</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}"></td>
+            <td th:text="${category.name}"></td>
+            <td th:text="${category.description}"></td>
+            <td>
+                <span th:text="${category.artworks.size()} + ' tác phẩm'"></span>
+            </td>
+            <td>
+                <a th:href="@{/categories/edit/{id}(id=${category.id})}">Sửa</a>
+                <a th:href="@{/categories/delete/{id}(id=${category.id})}"
+                   onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này')">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a href="/artworks">Xem danh sách tác phẩm</a>
+    </div>
+</div>
+</body>
+</html>
