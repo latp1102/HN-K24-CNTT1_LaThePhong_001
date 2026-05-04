@@ -63,7 +63,7 @@ public class ArtworkController {
             }
             
             artworkRepository.save(artwork);
-            redirectAttributes.addFlashAttribute("successMessage", "Thêm tác phẩm thành công!");
+            redirectAttributes.addFlashAttribute("successMessage", "Thêm tác phẩm thành công");
             return "redirect:/artworks";
         } catch (IOException e) {
             model.addAttribute("categories", categoryRepository.findAll());
@@ -106,7 +106,7 @@ public class ArtworkController {
                 existingArtwork.setCategory(artwork.getCategory());
                 existingArtwork.setStatus(artwork.getStatus());
                 artworkRepository.save(existingArtwork);
-                redirectAttributes.addFlashAttribute("successMessage", "Cập nhật tác phẩm thành công!");
+                redirectAttributes.addFlashAttribute("successMessage", "Cập nhật tác phẩm thành công");
                 return "redirect:/artworks";
             } catch (IOException e) {
                 model.addAttribute("categories", categoryRepository.findAll());
@@ -127,7 +127,7 @@ public class ArtworkController {
                     fileUploadService.deleteFile(artwork.getCoverImage());
                 }
                 artworkRepository.delete(artwork);
-                redirectAttributes.addFlashAttribute("successMessage", "Xóa tác phẩm thành công!");
+                redirectAttributes.addFlashAttribute("successMessage", "Xóa tác phẩm thành công");
                 return "redirect:/artworks";
             } catch (IOException e) {
                 redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi xóa file: " + e.getMessage());

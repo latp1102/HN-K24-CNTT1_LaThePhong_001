@@ -38,7 +38,7 @@ public class CategoryController {
             return "category-form";
         }
         categoryRepository.save(category);
-        redirectAttributes.addFlashAttribute("successMessage", "Thêm danh mục thành công!");
+        redirectAttributes.addFlashAttribute("successMessage", "Thêm danh mục thành công");
         return "redirect:/categories";
     }
     
@@ -66,7 +66,7 @@ public class CategoryController {
             existingCategory.setName(category.getName());
             existingCategory.setDescription(category.getDescription());
             categoryRepository.save(existingCategory);
-            redirectAttributes.addFlashAttribute("successMessage", "Cập nhật danh mục thành công!");
+            redirectAttributes.addFlashAttribute("successMessage", "Cập nhật danh mục thành công");
             return "redirect:/categories";
         }).orElseGet(() -> {
             redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy danh mục");
@@ -78,7 +78,7 @@ public class CategoryController {
     public String deleteCategory(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         return categoryRepository.findById(id).map(category -> {
             categoryRepository.delete(category);
-            redirectAttributes.addFlashAttribute("successMessage", "Xóa danh mục thành công!");
+            redirectAttributes.addFlashAttribute("successMessage", "Xóa danh mục thành công");
             return "redirect:/categories";
         }).orElseGet(() -> {
             redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy danh mục");
