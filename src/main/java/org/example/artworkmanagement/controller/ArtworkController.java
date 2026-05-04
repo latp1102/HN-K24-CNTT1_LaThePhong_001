@@ -27,9 +27,7 @@ public class ArtworkController {
     private final CategoryRepository categoryRepository;
     private final FileUploadService fileUploadService;
     @GetMapping
-    public String listArtworks(@RequestParam(defaultValue = "0") int page, 
-                              @RequestParam(defaultValue = "5") int size, 
-                              Model model) {
+    public String listArtworks(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, Model model) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Artwork> artworkPage = artworkRepository.findAll(pageable);
         
